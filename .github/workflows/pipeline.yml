@@ -29,8 +29,9 @@ jobs:
       - name: Build Docker Image
         run: |
           docker build \
-            --build-arg GITHUB_TOKEN=${{ steps.app-token.outputs.token }} -t ${{ secrets.DOCKERHUB_USERNAME }}/my-test-image:latest .
-
+            --build-arg GITHUB_TOKEN=${{ steps.app-token.outputs.token }} \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/my-test-image:latest \
+            .
       # Push image
       - name: Push Docker Image
         run: |
