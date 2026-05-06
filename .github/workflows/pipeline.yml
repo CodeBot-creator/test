@@ -23,16 +23,20 @@ jobs:
 
       # Login to Docker Hub
       - name: Login to Docker Hub
-        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+        run: |
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login \
+            -u "${{ secrets.DOCKERHUB_USERNAME }}" \
+            --password-stdin
 
-      # Build image
+      # Build Docker Image
       - name: Build Docker Image
         run: |
           docker build \
             --build-arg GITHUB_TOKEN=${{ steps.app-token.outputs.token }} \
-            -t ${{ secrets.DOCKERHUB_USERNAME }}/my-test-image:latest \
+            -t "${{ secrets.DOCKERHUB_USERNAME }}/my-test-image:latest" \
             .
-      # Push image
+
+      # Push Docker Image
       - name: Push Docker Image
         run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/my-test-image:latest
+          docker push "${{ secrets.DOCKERHUB_USERNAME }}/my-test-image:latest"
